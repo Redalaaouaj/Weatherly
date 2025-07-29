@@ -9,91 +9,211 @@
 
     <link rel="stylesheet" href="styles/globals.css">
     <style>
-        :root {
-            --text-2xl: 1.5rem;
-            --text-xl: 1.25rem;
-            --text-lg: 1.125rem;
-            --text-base: 1rem;
-        }
+         * {
+      font-family: 'Judson', sans-serif;
+    }
     </style>
 </head>
 
 <body class="min-h-screen">
     <!-- Container principal -->
-    <div id="app"
-        class="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 transition-all duration-1000">
-        <div class="container mx-auto px-4 py-6 max-w-6xl">
+    <main class="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 transition-all duration-1000">
+        <header class="container mx-auto px-4 py-6 max-w-6xl">
             <!-- Header -->
-            <header class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 gap-4">
-                <div class="flex items-center gap-3">
+            <nav class="flex justify-between items-center mb-8">
+                <!-- Logo (always visible) -->
+                <div class="flex items-center">
                     <img src="./src/WH.png" alt="Weatherly logo" class="w-28">
-                    
-                </div>
-                <div
-                    class=" py-2 px-2 flex gap-2 shadow-lg rounded-xl backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                    <div class="group relative px-3 cursor-pointer">
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
-                        </div>
-                        <span
-                            class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
-                            Location
-                        </span>
-                    </div>
-
-                    <div class="group relative px-3 cursor-pointer">
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-earth-icon lucide-earth"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                        </div>
-                        <span
-                            class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
-                            Search
-                        </span>
-                    </div>
-
-                    <div class="group relative px-3 cursor-pointer">
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                            <svg class="group-hover:scale-110 transition-transform duration-300" width="20" height="20"
-                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"
-                                    stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
-                                    stroke="currentColor"></path>
-                            </svg>
-                        </div>
-                        <span
-                            class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
-                            About
-                        </span>
-                    </div>
-
-                    <div class="group relative px-3 cursor-pointer">
-                        <div
-                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
-                        </div>
-                        <span
-                            class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
-                            Contact
-                        </span>
-                    </div>
                 </div>
 
-                <label class="relative inline-flex items-center cursor-pointer">
+                <!-- Desktop Navigation (hidden on mobile) -->
+                <div class="hidden lg:flex items-center gap-4">
+                    <div class="py-2 px-2 flex gap-2 shadow-lg rounded-xl backdrop-blur-sm hover:shadow-xl transition-all duration-300 bg-white/20">
+                        <div class="group relative px-3 cursor-pointer">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin">
+                                    <path
+                                        d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                                    <circle cx="12" cy="10" r="3" />
+                                </svg>
+                            </div>
+                            <span
+                                class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                                Location
+                            </span>
+                        </div>
+
+                        <div class="group relative px-3 cursor-pointer">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-earth-icon lucide-earth">
+                                    <path d="M21.54 15H17a2 2 0 0 0-2 2v4.54" />
+                                    <path
+                                        d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17" />
+                                    <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05" />
+                                    <circle cx="12" cy="12" r="10" />
+                                </svg>
+                            </div>
+                            <span
+                                class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                                Search
+                            </span>
+                        </div>
+
+                        <div class="group relative px-3 cursor-pointer">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                <svg class="group-hover:scale-110 transition-transform duration-300" width="20" height="20"
+                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"
+                                        stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
+                                        stroke="currentColor"></path>
+                                </svg>
+                            </div>
+                            <span
+                                class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                                About
+                            </span>
+                        </div>
+
+                        <div class="group relative px-3 cursor-pointer">
+                            <div
+                                class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone">
+                                    <path
+                                        d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
+                                </svg>
+                            </div>
+                            <span
+                                class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
+                                Contact
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <label class="relative hidden lg:inline-flex items-center cursor-pointer">
                     <input type="checkbox" value="" class="sr-only peer">
                     <div
-                        class="group peer ring-0  bg-gradient-to-bl from-yellow-800 via-yellow-700 to-yellow-600  rounded-full outline-none duration-1000 after:duration-300 w-24 h-12  shadow-md  peer-focus:outline-none  after:content-[''] after:rounded-full after:absolute after:[background:#0D2B39]   peer-checked:after:rotate-180 after:[background:conic-gradient(from_135deg,_#b2a9a9,_#b2a8a8,_#ffffff,_#d7dbd9_,_#ffffff,_#b2a8a8)]  after:outline-none after:h-10 after:w-10 after:top-1 after:left-1   peer-checked:after:translate-x-12 peer-hover:after:scale-95 peer-checked:bg-gradient-to-r peer-checked:from-neutral-500 peer-checked:to-neutral-900">
-
+                        class="group peer ring-0  bg-gradient-to-bl from-yellow-800 via-yellow-700 to-yellow-600  rounded-full outline-none duration-1000 after:duration-300 w-24 h-12  shadow-md  peer-focus:outline-none  after:content-[''] after:rounded-full after:absolute   peer-checked:after:rotate-180 after:[background:conic-gradient(from_135deg,_#b2a9a9,_#b2a8a8,_#ffffff,_#d7dbd9_,_#ffffff,_#b2a8a8)]  after:outline-none after:h-10 after:w-10 after:top-1 after:left-1   peer-checked:after:translate-x-12 peer-hover:after:scale-95 peer-checked:bg-gradient-to-r peer-checked:from-neutral-500 peer-checked:to-neutral-900">
                     </div>
                 </label>
 
+                <!-- Mobile Burger Menu (visible on mobile only) -->
+                <div class="lg:hidden relative">
+                    <label class="cursor-pointer" for="menu-toggle">
+                        <input class="hidden peer" type="checkbox" id="menu-toggle" />
+                        <div class="w-9 h-10 cursor-pointer flex flex-col items-center justify-center peer-checked:[&>div:nth-child(1)]:rotate-[-45deg] peer-checked:[&>div:nth-child(1)]:translate-y-[0.45rem] peer-checked:[&>div:nth-child(2)]:hidden peer-checked:[&>div:nth-child(3)]:rotate-[45deg] peer-checked:[&>div:nth-child(3)]:-translate-y-[0.45rem]">
+                            <div class="w-[50%] h-[2px] bg-white rounded-sm transition-all duration-300 origin-left"></div>
+                            <div class="w-[50%] h-[2px] bg-white rounded-md transition-all duration-300 origin-center my-1"></div>
+                            <div class="w-[50%] h-[2px] bg-white rounded-md transition-all duration-300 origin-left"></div>
+                        </div>
 
-            </header>
-            
-    <script></script>
+                        <!-- Mobile Menu Dropdown -->
+                        <div class="absolute top-full right-0 mt-2 w-[338px]  bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-white/20 scale-0 peer-checked:scale-100 opacity-0 peer-checked:opacity-100 invisible peer-checked:visible transition-all duration-300 z-50 origin-top-right">
+                            <div class="p-4 space-y-4">
+                                <!-- Mobile Navigation Icons -->
+                                <div class="flex justify-center gap-3 pb-4 border-b border-gray-200/30">
+                                    <div class="group relative cursor-pointer">
+                                        <div
+                                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin">
+                                                <path
+                                                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                                                <circle cx="12" cy="10" r="3" />
+                                            </svg>
+                                        </div>
+                                        <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Location</span>
+                                    </div>
+
+                                    <div class="group relative cursor-pointer">
+                                        <div
+                                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="lucide lucide-earth-icon lucide-earth">
+                                                <path d="M21.54 15H17a2 2 0 0 0-2 2v4.54" />
+                                                <path
+                                                    d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17" />
+                                                <path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05" />
+                                                <circle cx="12" cy="12" r="10" />
+                                            </svg>
+                                        </div>
+                                        <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Search</span>
+                                    </div>
+
+                                    <div class="group relative cursor-pointer">
+                                        <div
+                                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                            <svg class="group-hover:scale-110 transition-transform duration-300" width="18" height="18"
+                                                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"
+                                                    stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
+                                                    stroke="currentColor"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">About</span>
+                                    </div>
+
+                                    <div class="group relative cursor-pointer">
+                                        <div
+                                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone">
+                                                <path
+                                                    d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
+                                            </svg>
+                                        </div>
+                                        <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Contact</span>
+                                    </div>
+                                </div>
+
+                                <!-- Theme Toggle in Mobile Menu -->
+                                <div class="flex justify-center pt-2">
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" value="" class="sr-only peer">
+                                        <div
+                                            class="group peer ring-0 bg-gradient-to-bl from-yellow-800 via-yellow-700 to-yellow-600 rounded-full outline-none duration-1000 after:duration-300 w-20 h-10 shadow-md peer-focus:outline-none after:content-[''] after:rounded-full after:absolute after:[background:#0D2B39] peer-checked:after:rotate-180 after:[background:conic-gradient(from_135deg,_#b2a9a9,_#b2a8a8,_#ffffff,_#d7dbd9_,_#ffffff,_#b2a8a8)] after:outline-none after:h-8 after:w-8 after:top-1 after:left-1 peer-checked:after:translate-x-10 peer-hover:after:scale-95 peer-checked:bg-gradient-to-r peer-checked:from-neutral-500 peer-checked:to-neutral-900">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </nav>
+        </header>
+        
+    </main>
+
+    
+<script>
+// Handle mobile menu - close when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    
+    if (menuToggle) {
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lg\\:hidden') && menuToggle.checked) {
+                menuToggle.checked = false;
+            }
+        });
+    }
+});
+</script>
 </body>
 
 </html>
