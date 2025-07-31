@@ -38,6 +38,41 @@
             background: none;
             animation: none;
         }
+        
+        /* Dark theme styles */
+        .dark-theme .bg-white\/10 {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+        }
+        
+        .dark-theme .bg-white\/20 {
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        .dark-theme .bg-white\/90 {
+            background-color: rgba(30, 30, 30, 0.95) !important;
+            color: white !important;
+        }
+        
+        .dark-theme .text-gray-900 {
+            color: white !important;
+        }
+        
+        .dark-theme .bg-white {
+            background-color: rgba(30, 30, 30, 0.9) !important;
+            color: white !important;
+        }
+        
+        .dark-theme .bg-gray-300 {
+            background-color: rgba(60, 60, 60, 0.8) !important;
+        }
+        
+        .dark-theme .placeholder-gray-500::placeholder {
+            color: rgba(200, 200, 200, 0.7) !important;
+        }
+        
+        .dark-theme .border-white\/20 {
+            border-color: rgba(255, 255, 255, 0.3) !important;
+        }
     </style>
 </head>
 
@@ -54,7 +89,7 @@
                         class="py-2 px-2 flex gap-2 shadow-lg rounded-xl backdrop-blur-sm hover:shadow-xl transition-all duration-300 bg-white/20">
 
 
-                        <div class="group relative px-3 cursor-pointer">
+                        <div id="search" class="group relative px-3 cursor-pointer">
                             <div
                                 class="text-blue-100 flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -73,7 +108,7 @@
                             </span>
                         </div>
 
-                        <div class="group relative px-3 cursor-pointer">
+                        <div id="about" class="group relative px-3 cursor-pointer">
                             <div
                                 class="text-blue-100 flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                 <svg class="group-hover:scale-110 transition-transform duration-300" width="20"
@@ -90,7 +125,7 @@
                             </span>
                         </div>
 
-                        <div class="group relative px-3 cursor-pointer">
+                        <div id="contact" class="group relative px-3 cursor-pointer">
                             <div
                                 class="text-blue-100 flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -135,23 +170,9 @@
                             class="absolute top-full right-0 mt-2 w-[338px]  bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-white/20 scale-0 peer-checked:scale-100 opacity-0 peer-checked:opacity-100 invisible peer-checked:visible transition-all duration-300 z-50 origin-top-right">
                             <div class="p-4 space-y-4">
                                 <div class="flex justify-center gap-3 pb-4 border-b border-gray-200/30">
-                                    <div class="group relative cursor-pointer">
-                                        <div
-                                            class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-map-pin-icon lucide-map-pin">
-                                                <path
-                                                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-                                                <circle cx="12" cy="10" r="3" />
-                                            </svg>
-                                        </div>
-                                        <span
-                                            class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Location</span>
-                                    </div>
+                                    
 
-                                    <div class="group relative cursor-pointer">
+                                    <div id="search" class="group relative cursor-pointer">
                                         <div
                                             class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -170,7 +191,7 @@
                                             class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Search</span>
                                     </div>
 
-                                    <div class="group relative cursor-pointer">
+                                    <div id="about" class="group relative cursor-pointer">
                                         <div
                                             class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                             <svg class="group-hover:scale-110 transition-transform duration-300"
@@ -186,7 +207,7 @@
                                             class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">About</span>
                                     </div>
 
-                                    <div class="group relative cursor-pointer">
+                                    <div id="contact" class="group relative cursor-pointer">
                                         <div
                                             class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -217,7 +238,7 @@
             </nav>
         </header>
 
-        <section class="flex flex-row justify-center gap-4 px-4">
+        <section id="search" class="flex flex-row justify-center gap-4 px-4">
             <!-- °C / °F -->
             <div class="flex bg-white/20 rounded-lg p-1">
                 <label class="cursor-pointer py-1">
@@ -603,7 +624,7 @@
 
 
     
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 
 </html>

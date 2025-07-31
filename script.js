@@ -9,6 +9,16 @@
                 });
             }
 
+            // Theme toggle functionality
+            const themeToggles = document.querySelectorAll('input[type="checkbox"]');
+            themeToggles.forEach(toggle => {
+                if (toggle.closest('label.relative')) {
+                    toggle.addEventListener('change', function() {
+                        toggleTheme(this.checked);
+                    });
+                }
+            });
+
             // °C / °F
             const celsiusRadio = document.getElementById('c');
             const fahrenheitRadio = document.getElementById('f');
@@ -36,10 +46,38 @@
                     getWeatherByCity(city);
                 }
             });
+
+            // Initialize theme from localStorage
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const isDark = savedTheme === 'dark';
+            themeToggles.forEach(toggle => {
+                if (toggle.closest('label.relative')) {
+                    toggle.checked = isDark;
+                }
+            });
+            toggleTheme(isDark);
         });
 
         // Store current weather data globally for unit conversion
         window.currentWeatherData = null;
+        window.currentTheme = 'light';
+
+        function toggleTheme(isDark) {
+            window.currentTheme = isDark ? 'dark' : 'light';
+            localStorage.setItem('theme', window.currentTheme);
+            
+            // Update body class for theme
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+            
+            // If we have weather data, update the background with the new theme
+            if (window.currentWeatherData) {
+                updateWeatherIcon(window.currentWeatherData.weather[0].main);
+            }
+        }
 
         function updateTemperatureUnits(unit) {
             if (!window.currentWeatherData) return;
@@ -160,13 +198,16 @@
         function updateWeatherIcon(weatherMain) {
             const iconElement = document.querySelector('.weather-icon');
             const mainContainer = document.getElementById('main-container');
+            const isDark = window.currentTheme === 'dark';
             let iconSVG = '';
             
-            // Update background based on weather condition
+            // Update background based on weather condition and theme
             switch(weatherMain.toLowerCase()) {
                
                 case 'clouds':
-                    mainContainer.className = 'min-h-screen bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 transition-all duration-1000';
+                    mainContainer.className = isDark
+                        ? 'min-h-screen bg-gradient-to-br from-gray-600 via-gray-700 to-gray-800 transition-all duration-1000'
+                        : 'min-h-screen bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600 transition-all duration-1000';
                     iconSVG = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -176,7 +217,9 @@
                     break;
                 case 'rain':
                 case 'drizzle':
-                    mainContainer.className = 'min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 transition-all duration-1000';
+                    mainContainer.className = isDark
+                        ? 'min-h-screen bg-gradient-to-br from-blue-800 via-indigo-800 to-blue-900 transition-all duration-1000'
+                        : 'min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 transition-all duration-1000';
                     iconSVG = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -187,7 +230,9 @@
                         </svg>`;
                     break;
                 case 'snow':
-                    mainContainer.className = 'min-h-screen bg-gradient-to-br from-slate-300 via-slate-400 to-slate-500 transition-all duration-1000';
+                    mainContainer.className = isDark
+                        ? 'min-h-screen bg-gradient-to-br from-slate-500 via-slate-600 to-slate-700 transition-all duration-1000'
+                        : 'min-h-screen bg-gradient-to-br from-slate-300 via-slate-400 to-slate-500 transition-all duration-1000';
                     iconSVG = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -199,7 +244,9 @@
                         </svg>`;
                     break;
                 case 'thunderstorm':
-                    mainContainer.className = 'min-h-screen bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 transition-all duration-1000';
+                    mainContainer.className = isDark
+                        ? 'min-h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black transition-all duration-1000'
+                        : 'min-h-screen bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 transition-all duration-1000';
                     iconSVG = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -211,7 +258,9 @@
                 case 'mist':
                 case 'fog':
                 case 'haze':
-                    mainContainer.className = 'min-h-screen bg-gradient-to-br from-gray-400 via-gray-400 to-gray-500 transition-all duration-1000';
+                    mainContainer.className = isDark
+                        ? 'min-h-screen bg-gradient-to-br from-gray-500 via-gray-600 to-gray-700 transition-all duration-1000'
+                        : 'min-h-screen bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 transition-all duration-1000';
                     iconSVG = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -220,7 +269,9 @@
                         </svg>`;
                     break;
                 default:
-                    mainContainer.className = 'min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 transition-all duration-1000';
+                    mainContainer.className = isDark
+                        ? 'min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 transition-all duration-1000'
+                        : 'min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 transition-all duration-1000';
                     iconSVG = `
                         <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -241,5 +292,4 @@
                 iconElement.innerHTML = iconSVG;
             }
         }
-
 
