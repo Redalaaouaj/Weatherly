@@ -307,7 +307,7 @@
         }
 
         function updateHourlyForecast(forecastData) {
-            const hourlyContainer = document.querySelector('.grid.grid-cols-3.lg\\:grid-cols-6');
+            const hourlyContainer = document.querySelector('.grid.grid-cols-3.md\\:grid-cols-6');
             if (!hourlyContainer) return;
 
             // Get the next 6 forecast entries (18 hours ahead, 3-hour intervals)
@@ -398,7 +398,7 @@
                 }
 
                 const forecastCard = document.createElement('div');
-                forecastCard.className = 'bg-gray-300 w-28 h-32 rounded-2xl';
+                forecastCard.className = 'bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl';
                 forecastCard.innerHTML = `
                     <div class="flex flex-col items-center justify-between h-full p-2">
                         <p class="text-sm">${timeString}</p>
