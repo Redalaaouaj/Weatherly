@@ -564,9 +564,9 @@
                         <span class="text-gray-900 font-medium">${forecast.dayName}</span>
                         ${iconSVG}
                     </div>
+                    <span class="text-gray-900 font-medium">Humidity: ${forecast.humidity}%</span>
                     <span class="text-gray-900 font-medium">max: ${forecast.maxTemp}${unit}</span>
                     <span class="text-gray-900 font-medium">min: ${forecast.minTemp}${unit}</span>
-                    <span class="text-gray-900 font-medium">Humidity: ${forecast.humidity}%</span>
                 `;
                 
                 dailyContainer.appendChild(forecastCard);
