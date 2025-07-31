@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,32 @@
     <style>
         * {
             font-family: 'Judson', sans-serif;
+        }
+        
+        .skeleton-loading {
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0.1) 25%, 
+                rgba(255,255,255,0.3) 50%, 
+                rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+            display: inline-block;
+            min-width: 3ch;
+        }
+        
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        .loaded .skeleton-loading {
+            background: none;
+            animation: none;
         }
     </style>
 </head>
@@ -248,6 +274,7 @@
             </div>
         </section>
 
+        <!-- weather info -->
         <section>
             <div class="my-8 p-4">
                 <div class="p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white">
@@ -255,42 +282,34 @@
                         <!-- Informations principales -->
                         <div class="flex items-center justify-between">
                             <div>
-                                <h2 class="text-2xl mb-1" id="current-location">Casablanca, MA</h2>
-                                <p class="text-white/80 mb-4" id="current-description">Ensoleillé</p>
+                                <h2 class="text-2xl mb-1" id="current-location">
+                                    <span class="skeleton-loading">Loading...</span>
+                                </h2>
+                                <p class="text-white/80 mb-4" id="current-description">
+                                    <span class="skeleton-loading">Loading...</span>
+                                </p>
                                 <div class="flex items-baseline gap-2">
-                                    <span class="text-5xl" id="current-temp">28</span>
+                                    <span class="text-5xl skeleton-loading" id="current-temp">--</span>
                                     <span class="text-xl" id="temp-unit">°C</span>
                                 </div>
                                 <p class="text-white/80 mt-2">
-                                    Ressenti <span id="feels-like">30</span><span id="feels-like-unit">°C</span>
+                                    Feels like <span id="feels-like" class="skeleton-loading">--</span><span id="feels-like-unit">°C</span>
                                 </p>
                             </div>
-                            <div class="text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
+                            <div class="text-center weather-icon skeleton-loading">
+                                <div class="w-24 h-24 bg-white/20 rounded-full animate-pulse"></div>
                             </div>
                         </div>
 
-                        <!-- Détails météo -->
+                        <!-- Weather Details -->
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                             <div class="flex items-center gap-2">
                                 <svg class="w-5 h-5 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
                                 </svg>
                                 <div>
-                                    <p class="text-sm text-white/80">Humidité</p>
-                                    <p id="humidity">65%</p>
+                                    <p class="text-sm text-white/80">Humidity</p>
+                                    <p id="humidity" class="skeleton-loading">--</p>
                                 </div>
                             </div>
 
@@ -302,20 +321,19 @@
                                     <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
                                 </svg>
                                 <div>
-                                    <p class="text-sm text-white/80">Vent</p>
-                                    <p><span id="wind-speed">15</span> km/h</p>
+                                    <p class="text-sm text-white/80">Wind</p>
+                                    <p><span id="wind-speed" class="skeleton-loading">--</span> km/h</p>
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-2">
-                                <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M12 6v6l4 2" />
+                                <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 6v6l4 2"></path>
                                 </svg>
                                 <div>
-                                    <p class="text-sm text-white/80">Pression</p>
-                                    <p><span id="pressure">1013</span> hPa</p>
+                                    <p class="text-sm text-white/80">Pressure</p>
+                                    <p><span id="pressure" class="skeleton-loading">--</span> hPa</p>
                                 </div>
                             </div>
 
@@ -326,28 +344,16 @@
                                     <circle cx="12" cy="12" r="3" />
                                 </svg>
                                 <div>
-                                    <p class="text-sm text-white/80">Visibilité</p>
-                                    <p><span id="visibility">10</span> km</p>
+                                    <p class="text-sm text-white/80">Visibility</p>
+                                    <p><span id="visibility" class="skeleton-loading">--</span>km</p>
                                 </div>
                             </div>
 
                             <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="3" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-blue-200"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
                                 <div>
-                                    <p class="text-sm text-white/80">UV Index</p>
-                                    <p><span id="uv-index">6</span>/10</p>
+                                    <p class="text-sm text-white/80">Clouds</p>
+                                    <p><span id="cloudiness" class="skeleton-loading">--</span>%</p>
                                 </div>
                             </div>
                         </div>
@@ -621,7 +627,228 @@
                     }
                 });
             }
+
+            // °C / °F
+            const celsiusRadio = document.getElementById('c');
+            const fahrenheitRadio = document.getElementById('f');
+            
+            celsiusRadio.addEventListener('change', function() {
+                if (this.checked && window.currentWeatherData) {
+                    updateTemperatureUnits('celsius');
+                }
+            });
+            
+            fahrenheitRadio.addEventListener('change', function() {
+                if (this.checked && window.currentWeatherData) {
+                    updateTemperatureUnits('fahrenheit');
+                }
+            });
+
+            // Handle search form
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const city = searchInput.value.trim();
+                if (city) {
+                    getWeatherByCity(city);
+                }
+            });
         });
+
+        // Store current weather data globally for unit conversion
+        window.currentWeatherData = null;
+
+        function updateTemperatureUnits(unit) {
+            if (!window.currentWeatherData) return;
+            
+            const data = window.currentWeatherData;
+            let temp, feelsLike;
+            
+            if (unit === 'fahrenheit') {
+                temp = Math.round((data.main.temp * 9/5) + 32);
+                feelsLike = Math.round((data.main.feels_like * 9/5) + 32);
+                document.getElementById('temp-unit').textContent = '°F';
+                document.getElementById('feels-like-unit').textContent = '°F';
+            } else {
+                temp = Math.round(data.main.temp);
+                feelsLike = Math.round(data.main.feels_like);
+                document.getElementById('temp-unit').textContent = '°C';
+                document.getElementById('feels-like-unit').textContent = '°C';
+            }
+            
+            document.getElementById('current-temp').textContent = temp;
+            document.getElementById('feels-like').textContent = feelsLike;
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error);
+
+        function success(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            getWeatherByCoords(lat, lon);
+        }
+
+        function error(err) {
+            console.error(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        async function getWeatherByCoords(lat, lon) {
+            const apiKey = 'fe2e871b6aa475581e7756c89d92cb3f';
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(data);
+                updateWeatherDisplay(data);
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                showErrorMessage('Unable to fetch weather data for your location.');
+            }
+        }
+
+        async function getWeatherByCity(city) {
+            const apiKey = 'fe2e871b6aa475581e7756c89d92cb3f';
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log(data);
+                    updateWeatherDisplay(data);
+                } else {
+                    showErrorMessage(`City "${city}" not found. Please try another city.`);
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                showErrorMessage('Unable to fetch weather data. Please try again.');
+            }
+        }
+
+        function showErrorMessage(message) {
+            // You can implement a toast notification or update the UI to show error
+            alert(message);
+        }
+
+        function updateWeatherDisplay(data) {
+
+            window.currentWeatherData = data;
+            document.body.classList.add('loaded');
+            
+            const weatherIcon = document.querySelector('.weather-icon');
+            weatherIcon.classList.remove('skeleton-loading');
+            
+            document.getElementById('current-location').innerHTML = `${data.name}, ${data.sys.country}`;
+            
+            document.getElementById('current-description').innerHTML = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+            
+            const isFahrenheit = document.getElementById('f').checked;
+            let temp, feelsLike;
+            
+            if (isFahrenheit) {
+                temp = Math.round((data.main.temp * 9/5) + 32);
+                feelsLike = Math.round((data.main.feels_like * 9/5) + 32);
+                document.getElementById('temp-unit').textContent = '°F';
+                document.getElementById('feels-like-unit').textContent = '°F';
+            } else {
+                temp = Math.round(data.main.temp);
+                feelsLike = Math.round(data.main.feels_like);
+                document.getElementById('temp-unit').textContent = '°C';
+                document.getElementById('feels-like-unit').textContent = '°C';
+            }
+            
+            document.getElementById('current-temp').textContent = temp;
+            document.getElementById('feels-like').textContent = feelsLike;
+            
+            // Update weather details with API data
+            document.getElementById('humidity').textContent = `${data.main.humidity}%`;
+            document.getElementById('wind-speed').textContent = Math.round(data.wind.speed * 3.6); // Convert m/s to km/h
+            document.getElementById('pressure').textContent = data.main.pressure;
+            document.getElementById('visibility').textContent = Math.round(data.visibility / 1000); // Convert meters to km
+            document.getElementById('cloudiness').textContent = data.clouds.all; // Cloud coverage percentage
+            
+            // Update weather icon based on weather condition
+            updateWeatherIcon(data.weather[0].main);
+        }
+
+        function updateWeatherIcon(weatherMain) {
+            const iconElement = document.querySelector('.weather-icon');
+            let iconSVG = '';
+            
+            switch(weatherMain.toLowerCase()) {
+                case 'clear':
+                    iconSVG = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-sun">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v2" />
+                            <path d="M12 20v2" />
+                            <path d="m4.93 4.93 1.41 1.41" />
+                            <path d="m17.66 17.66 1.41 1.41" />
+                            <path d="M2 12h2" />
+                            <path d="M20 12h2" />
+                            <path d="m6.34 17.66-1.41 1.41" />
+                            <path d="m19.07 4.93-1.41 1.41" />
+                        </svg>`;
+                    break;
+                case 'clouds':
+                    iconSVG = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-cloud">
+                            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                        </svg>`;
+                    break;
+                case 'rain':
+                    iconSVG = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-cloud-rain">
+                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                            <path d="m16 14-3 5-3-5" />
+                            <path d="m8 14-3 5-3-5" />
+                        </svg>`;
+                    break;
+                case 'snow':
+                    iconSVG = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-cloud-snow">
+                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                            <path d="m8 21 1-3 1 3" />
+                            <path d="m13 21 1-3 1 3" />
+                            <path d="m17 21 1-3 1 3" />
+                        </svg>`;
+                    break;
+                default:
+                    iconSVG = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-sun">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v2" />
+                            <path d="M12 20v2" />
+                            <path d="m4.93 4.93 1.41 1.41" />
+                            <path d="m17.66 17.66 1.41 1.41" />
+                            <path d="M2 12h2" />
+                            <path d="M20 12h2" />
+                            <path d="m6.34 17.66-1.41 1.41" />
+                            <path d="m19.07 4.93-1.41 1.41" />
+                        </svg>`;
+            }
+            
+            if (iconElement) {
+                iconElement.innerHTML = iconSVG;
+            }
+        }
+
+
     </script>
 </body>
 
