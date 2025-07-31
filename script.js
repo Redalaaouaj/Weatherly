@@ -60,7 +60,7 @@
 
         // Store current weather data globally for unit conversion
         window.currentWeatherData = null;
-        window.currentTheme = 'light';
+        window.currentTheme = 'dark';
 
         function toggleTheme(isDark) {
             window.currentTheme = isDark ? 'dark' : 'light';
@@ -117,13 +117,23 @@
 
         async function getWeatherByCoords(lat, lon) {
             const apiKey = 'fe2e871b6aa475581e7756c89d92cb3f';
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+            const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
             try {
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log(data);
-                updateWeatherDisplay(data);
+                const [currentResponse, forecastResponse] = await Promise.all([
+                    fetch(currentWeatherUrl),
+                    fetch(forecastUrl)
+                ]);
+                
+                const currentData = await currentResponse.json();
+                const forecastData = await forecastResponse.json();
+                
+                console.log('Current weather:', currentData);
+                console.log('Forecast data:', forecastData);
+                
+                updateWeatherDisplay(currentData);
+                updateHourlyForecast(forecastData);
             } catch (error) {
                 console.error('Error fetching weather data:', error);
                 showErrorMessage('Unable to fetch weather data for your location.');
@@ -132,15 +142,24 @@
 
         async function getWeatherByCity(city) {
             const apiKey = 'fe2e871b6aa475581e7756c89d92cb3f';
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+            const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
 
             try {
-                const response = await fetch(url);
-                const data = await response.json();
+                const [currentResponse, forecastResponse] = await Promise.all([
+                    fetch(currentWeatherUrl),
+                    fetch(forecastUrl)
+                ]);
                 
-                if (response.ok) {
-                    console.log(data);
-                    updateWeatherDisplay(data);
+                if (currentResponse.ok && forecastResponse.ok) {
+                    const currentData = await currentResponse.json();
+                    const forecastData = await forecastResponse.json();
+                    
+                    console.log('Current weather:', currentData);
+                    console.log('Forecast data:', forecastData);
+                    
+                    updateWeatherDisplay(currentData);
+                    updateHourlyForecast(forecastData);
                 } else {
                     showErrorMessage(`City "${city}" not found. Please try another city.`);
                 }
@@ -204,7 +223,6 @@
             
             // Update background based on weather condition and theme
             switch(weatherMain.toLowerCase()) {
-               
                 case 'clouds':
                     mainContainer.className = isDark
                         ? 'min-h-screen bg-gradient-to-br from-gray-600 via-gray-700 to-gray-800 transition-all duration-1000'
@@ -222,13 +240,7 @@
                         ? 'min-h-screen bg-gradient-to-br from-blue-800 via-indigo-800 to-blue-900 transition-all duration-1000'
                         : 'min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700 transition-all duration-1000';
                     iconSVG = `
-                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="lucide lucide-cloud-rain">
-                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-                            <path d="m16 14-3 5-3-5" />
-                            <path d="m8 14-3 5-3-5" />
-                        </svg>`;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-drizzle-icon lucide-cloud-drizzle"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/><path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/></svg>`;
                     break;
                 case 'snow':
                     mainContainer.className = isDark
@@ -292,5 +304,110 @@
             if (iconElement) {
                 iconElement.innerHTML = iconSVG;
             }
+        }
+
+        function updateHourlyForecast(forecastData) {
+            const hourlyContainer = document.querySelector('.grid.grid-cols-3.lg\\:grid-cols-6');
+            if (!hourlyContainer) return;
+
+            // Get the next 6 forecast entries (18 hours ahead, 3-hour intervals)
+            const next6Forecasts = forecastData.list.slice(0, 6);
+            
+            hourlyContainer.innerHTML = '';
+
+            next6Forecasts.forEach((forecast, index) => {
+                const forecastTime = new Date(forecast.dt * 1000);
+                const hours = forecastTime.getHours().toString().padStart(2, '0');
+                const minutes = forecastTime.getMinutes().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}`;
+                
+                const isFahrenheit = document.getElementById('f').checked;
+                const temp = isFahrenheit 
+                    ? Math.round((forecast.main.temp * 9/5) + 32)
+                    : Math.round(forecast.main.temp);
+                const unit = isFahrenheit ? '°F' : '°C';
+                
+                const weatherMain = forecast.weather[0].main.toLowerCase();
+                let iconSVG = '';
+                
+                switch(weatherMain) {
+                    case 'clear':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-sun">
+                                <circle cx="12" cy="12" r="4" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.93 4.93 1.41 1.41" />
+                                <path d="m17.66 17.66 1.41 1.41" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.34 17.66-1.41 1.41" />
+                                <path d="m19.07 4.93-1.41 1.41" />
+                            </svg>`;
+                        break;
+                    case 'clouds':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud">
+                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                            </svg>`;
+                        break;
+                    case 'rain':
+                    case 'drizzle':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-drizzle-icon lucide-cloud-drizzle"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/><path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/></svg>`;
+                        break;
+                    case 'snow':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud-snow">
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                <path d="m8 21 1-3 1 3" />
+                                <path d="m13 21 1-3 1 3" />
+                                <path d="m17 21 1-3 1 3" />
+                            </svg>`;
+                        break;
+                    case 'thunderstorm':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud-lightning">
+                                <path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" />
+                                <path d="m13 12-3 5h4l-3 5" />
+                            </svg>`;
+                        break;
+                    default:
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-sun">
+                                <circle cx="12" cy="12" r="3" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.93 4.93 1.41 1.41" />
+                                <path d="m17.66 17.66 1.41 1.41" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.34 17.66-1.41 1.41" />
+                                <path d="m19.07 4.93-1.41 1.41" />
+                            </svg>`;
+                }
+
+                const forecastCard = document.createElement('div');
+                forecastCard.className = 'bg-gray-300 w-28 h-32 rounded-2xl';
+                forecastCard.innerHTML = `
+                    <div class="flex flex-col items-center justify-between h-full p-2">
+                        <p class="text-sm">${timeString}</p>
+                        ${iconSVG}
+                        <p class="text-lg">${temp}${unit}</p>
+                    </div>
+                `;
+                
+                hourlyContainer.appendChild(forecastCard);
+            });
         }
 
