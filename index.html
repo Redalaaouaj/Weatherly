@@ -12,63 +12,63 @@
         * {
             font-family: 'Judson', sans-serif;
         }
-        
+
         .skeleton-loading {
-            background: linear-gradient(90deg, 
-                rgba(255,255,255,0.1) 25%, 
-                rgba(255,255,255,0.3) 50%, 
-                rgba(255,255,255,0.1) 75%);
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.1) 25%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    rgba(255, 255, 255, 0.1) 75%);
             background-size: 200% 100%;
             animation: loading 1.5s infinite;
             border-radius: 4px;
             min-width: 3ch;
         }
-        
+
         @keyframes loading {
             0% {
                 background-position: 200% 0;
             }
+
             100% {
                 background-position: -200% 0;
             }
         }
-        
+
         .loaded .skeleton-loading {
             background: none;
             animation: none;
         }
-        
-        /* Dark theme styles */
+
         .dark-theme .bg-white\/10 {
             background-color: rgba(0, 0, 0, 0.3) !important;
         }
-        
+
         .dark-theme .bg-white\/20 {
             background-color: rgba(0, 0, 0, 0.4) !important;
         }
-        
+
         .dark-theme .bg-white\/90 {
             background-color: rgba(30, 30, 30, 0.95) !important;
             color: white !important;
         }
-        
+
         .dark-theme .text-gray-900 {
             color: white !important;
         }
-        
+
         .dark-theme .bg-white {
             background-color: rgba(30, 30, 30, 0.9) !important;
             color: white !important;
         }
-        
+
         .dark-theme .bg-gray-300 {
             background-color: rgba(60, 60, 60, 0.8) !important;
         }
-        
+
         .dark-theme .placeholder-gray-500::placeholder {
             color: rgba(200, 200, 200, 0.7) !important;
         }
-        
+
         .dark-theme .border-white\/20 {
             border-color: rgba(255, 255, 255, 0.3) !important;
         }
@@ -76,7 +76,8 @@
 </head>
 
 <body class="min-h-screen">
-    <main id="main-container" class="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 transition-all duration-1000">
+    <main id="main-container"
+        class="min-h-screen bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 transition-all duration-1000">
         <header class="container mx-auto px-4 py-4 max-w-5xl">
             <nav class="flex justify-between items-center mb-8">
                 <div class="flex items-center">
@@ -169,7 +170,7 @@
                             class="absolute top-full right-0 mt-2 w-[338px]  bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-white/20 scale-0 peer-checked:scale-100 opacity-0 peer-checked:opacity-100 invisible peer-checked:visible transition-all duration-300 z-50 origin-top-right">
                             <div class="p-4 space-y-4">
                                 <div class="flex justify-center gap-3 pb-4 border-b border-gray-200/30">
-                                    
+
 
                                     <div id="search" class="group relative cursor-pointer">
                                         <div
@@ -298,7 +299,8 @@
                                     <span class="text-xl" id="temp-unit">°C</span>
                                 </div>
                                 <p class="text-white/80 mt-2">
-                                    Feels like <span id="feels-like" class="skeleton-loading">--</span><span id="feels-like-unit">°C</span>
+                                    Feels like <span id="feels-like" class="skeleton-loading">--</span><span
+                                        id="feels-like-unit">°C</span>
                                 </p>
                             </div>
                             <div class="text-center weather-icon skeleton-loading">
@@ -332,7 +334,8 @@
                             </div>
 
                             <div class="flex items-center gap-2">
-                                <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <path d="M12 6v6l4 2"></path>
                                 </svg>
@@ -355,7 +358,11 @@
                             </div>
 
                             <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-blue-200"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="w-5 h-5 text-blue-200">
+                                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                                </svg>
                                 <div>
                                     <p class="text-sm text-white/80">Clouds</p>
                                     <p><span id="cloudiness" class="skeleton-loading">--</span>%</p>
@@ -373,53 +380,10 @@
                 <div class="p-6 bg-white rounded-lg shadow-sm">
                     <h2 class="mb-8">3-Hour Forecast</h2>
                     <div class="grid grid-cols-3 md:grid-cols-6 gap-7 lg:gap-16">
-                        <!-- Forecast cards will be dynamically generated here -->
-                        <div class="bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl animate-pulse">
-                            <div class="flex flex-col items-center justify-between h-full p-2">
-                                <div class="h-4 bg-gray-400 rounded w-12"></div>
-                                <div class="w-9 h-9 bg-gray-400 rounded-full"></div>
-                                <div class="h-5 bg-gray-400 rounded w-10"></div>
-                            </div>
-                        </div>
-                        <div class="bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl animate-pulse">
-                            <div class="flex flex-col items-center justify-between h-full p-2">
-                                <div class="h-4 bg-gray-400 rounded w-12"></div>
-                                <div class="w-9 h-9 bg-gray-400 rounded-full"></div>
-                                <div class="h-5 bg-gray-400 rounded w-10"></div>
-                            </div>
-                        </div>
-                        <div class="bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl animate-pulse">
-                            <div class="flex flex-col items-center justify-between h-full p-2">
-                                <div class="h-4 bg-gray-400 rounded w-12"></div>
-                                <div class="w-9 h-9 bg-gray-400 rounded-full"></div>
-                                <div class="h-5 bg-gray-400 rounded w-10"></div>
-                            </div>
-                        </div>
-                        <div class="bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl animate-pulse">
-                            <div class="flex flex-col items-center justify-between h-full p-2">
-                                <div class="h-4 bg-gray-400 rounded w-12"></div>
-                                <div class="w-9 h-9 bg-gray-400 rounded-full"></div>
-                                <div class="h-5 bg-gray-400 rounded w-10"></div>
-                            </div>
-                        </div>
-                        <div class="bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl animate-pulse">
-                            <div class="flex flex-col items-center justify-between h-full p-2">
-                                <div class="h-4 bg-gray-400 rounded w-12"></div>
-                                <div class="w-9 h-9 bg-gray-400 rounded-full"></div>
-                                <div class="h-5 bg-gray-400 rounded w-10"></div>
-                            </div>
-                        </div>
-                        <div class="bg-gray-300 w-22 lg:w-28 h-32 rounded-2xl animate-pulse">
-                            <div class="flex flex-col items-center justify-between h-full p-2">
-                                <div class="h-4 bg-gray-400 rounded w-12"></div>
-                                <div class="w-9 h-9 bg-gray-400 rounded-full"></div>
-                                <div class="h-5 bg-gray-400 rounded w-10"></div>
-                            </div>
-                        </div>
+                        <!--  -->
                     </div>
-                       
 
-                    </div>
+
                 </div>
             </div>
         </section>
@@ -428,117 +392,9 @@
             <div class="my-8 px-4 py-3">
                 <div class="p-6 bg-white rounded-lg shadow-sm">
                     <h2 class="mb-8">5-days forecasts</h2>
-                    <div" class="space-y-4">
-                        <div class="flex items-center justify-between bg-gray-300 p-4 rounded-lg gap-6 flex-wrap">
-                            <div class="flex items-center gap-4">
-                                <span class="text-gray-900 font-medium">Monday</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
-                            </div>
-                            <span class="text-gray-900 font-medium">max: 26°C</span>
-                            <span class="text-gray-900 font-medium">min: 18°C</span>
-                            <span class="text-gray-900 font-medium">Humidity: 70%</span>
-                            <!-- <span class="text-gray-500">Sunny</span> -->
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-300 p-4 rounded-lg gap-6 flex-wrap">
-                            <div class="flex items-center gap-4">
-                                <span class="text-gray-900 font-medium">Monday</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
-                            </div>
-                            <span class="text-gray-900 font-medium">max: 26°C</span>
-                            <span class="text-gray-900 font-medium">min: 18°C</span>
-                            <span class="text-gray-900 font-medium">Humidity: 70%</span>
-                            <!-- <span class="text-gray-500">Sunny</span> -->
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-300 p-4 rounded-lg gap-6 flex-wrap">
-                            <div class="flex items-center gap-4">
-                                <span class="text-gray-900 font-medium">Monday</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
-                            </div>
-                            <span class="text-gray-900 font-medium">max: 26°C</span>
-                            <span class="text-gray-900 font-medium">min: 18°C</span>
-                            <span class="text-gray-900 font-medium">Humidity: 70%</span>
-
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-300 p-4 rounded-lg gap-6 flex-wrap">
-                            <div class="flex items-center gap-4">
-                                <span class="text-gray-900 font-medium">Monday</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
-                            </div>
-                            <span class="text-gray-900 font-medium">max: 26°C</span>
-                            <span class="text-gray-900 font-medium">min: 18°C</span>
-                            <span class="text-gray-900 font-medium">Humidity: 70%</span>
-
-                        </div>
-                        <div class="flex items-center justify-between bg-gray-300 p-4 rounded-lg gap-6 flex-wrap">
-                            <div class="flex items-center gap-4">
-                                <span class="text-gray-900 font-medium">Monday</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-sun-icon lucide-sun">
-                                    <circle cx="12" cy="12" r="4" />
-                                    <path d="M12 2v2" />
-                                    <path d="M12 20v2" />
-                                    <path d="m4.93 4.93 1.41 1.41" />
-                                    <path d="m17.66 17.66 1.41 1.41" />
-                                    <path d="M2 12h2" />
-                                    <path d="M20 12h2" />
-                                    <path d="m6.34 17.66-1.41 1.41" />
-                                    <path d="m19.07 4.93-1.41 1.41" />
-                                </svg>
-                            </div>
-                            <span class="text-gray-900 font-medium">max: 26°C</span>
-                            <span class="text-gray-900 font-medium">min: 18°C</span>
-                            <span class="text-gray-900 font-medium">Humidity: 70%</span>
-
-                        </div>
+                    <div id="dd" class="flex flex-col space-y-4 justify-around">
+                        <!-- -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -546,8 +402,8 @@
     </main>
 
 
-    
-<script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

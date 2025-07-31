@@ -134,6 +134,7 @@
                 
                 updateWeatherDisplay(currentData);
                 updateHourlyForecast(forecastData);
+                updateDailyForecast(forecastData);
             } catch (error) {
                 console.error('Error fetching weather data:', error);
                 showErrorMessage('Unable to fetch weather data for your location.');
@@ -160,6 +161,7 @@
                     
                     updateWeatherDisplay(currentData);
                     updateHourlyForecast(forecastData);
+                    updateDailyForecast(forecastData);
                 } else {
                     showErrorMessage(`City "${city}" not found. Please try another city.`);
                 }
@@ -170,7 +172,6 @@
         }
 
         function showErrorMessage(message) {
-            // You can implement a toast notification or update the UI to show error
             alert(message);
         }
 
@@ -408,6 +409,167 @@
                 `;
                 
                 hourlyContainer.appendChild(forecastCard);
+            });
+        }
+
+        function updateDailyForecast(forecastData) {
+            const dailyContainer = document.querySelector('#dd');
+            if (!dailyContainer) return;
+
+            // Group forecast data by day (each day has 8 entries - 3-hour intervals)
+            const dailyForecasts = [];
+            const processedDays = new Set();
+            
+            for (let i = 0; i < forecastData.list.length; i += 8) {
+                const dayData = forecastData.list.slice(i, i + 8);
+                if (dayData.length === 0) continue;
+                
+                const date = new Date(dayData[0].dt * 1000);
+                const dayKey = date.toDateString();
+                
+                if (processedDays.has(dayKey)) continue;
+                processedDays.add(dayKey);
+                
+                // Calculate daily min/max temperatures
+                let minTemp = Math.min(...dayData.map(item => item.main.temp_min));
+                let maxTemp = Math.max(...dayData.map(item => item.main.temp_max));
+                
+                // Convert temperatures if needed
+                const isFahrenheit = document.getElementById('f').checked;
+                if (isFahrenheit) {
+                    minTemp = Math.round((minTemp * 9/5) + 32);
+                    maxTemp = Math.round((maxTemp * 9/5) + 32);
+                } else {
+                    minTemp = Math.round(minTemp);
+                    maxTemp = Math.round(maxTemp);
+                }
+                
+                // Get the most common weather condition for the day
+                const weatherCounts = {};
+                dayData.forEach(item => {
+                    const weather = item.weather[0].main;
+                    weatherCounts[weather] = (weatherCounts[weather] || 0) + 1;
+                });
+                
+                const dominantWeather = Object.keys(weatherCounts).reduce((a, b) => 
+                    weatherCounts[a] > weatherCounts[b] ? a : b
+                );
+                
+                // Calculate average humidity
+                const avgHumidity = Math.round(dayData.reduce((sum, item) => sum + item.main.humidity, 0) / dayData.length);
+                
+                dailyForecasts.push({
+                    date: date,
+                    dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
+                    weather: dominantWeather,
+                    minTemp: minTemp,
+                    maxTemp: maxTemp,
+                    humidity: avgHumidity
+                });
+                
+                if (dailyForecasts.length >= 5) break;
+            }
+            
+            // Clear existing content
+            dailyContainer.innerHTML = '';
+            
+            // Generate forecast cards
+            dailyForecasts.forEach((forecast, index) => {
+                const weatherMain = forecast.weather.toLowerCase();
+                let iconSVG = '';
+                
+                switch(weatherMain) {
+                    case 'clear':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-sun">
+                                <circle cx="12" cy="12" r="4" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.93 4.93 1.41 1.41" />
+                                <path d="m17.66 17.66 1.41 1.41" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.34 17.66-1.41 1.41" />
+                                <path d="m19.07 4.93-1.41 1.41" />
+                            </svg>`;
+                        break;
+                    case 'clouds':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud">
+                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                            </svg>`;
+                        break;
+                    case 'rain':
+                    case 'drizzle':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud-drizzle">
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                                <path d="M8 19v1"/>
+                                <path d="M8 14v1"/>
+                                <path d="M16 19v1"/>
+                                <path d="M16 14v1"/>
+                                <path d="M12 21v1"/>
+                                <path d="M12 16v1"/>
+                            </svg>`;
+                        break;
+                    case 'snow':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud-snow">
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                <path d="m8 21 1-3 1 3" />
+                                <path d="m13 21 1-3 1 3" />
+                                <path d="m17 21 1-3 1 3" />
+                            </svg>`;
+                        break;
+                    case 'thunderstorm':
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-cloud-lightning">
+                                <path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" />
+                                <path d="m13 12-3 5h4l-3 5" />
+                            </svg>`;
+                        break;
+                    default:
+                        iconSVG = `
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-sun">
+                                <circle cx="12" cy="12" r="4" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.93 4.93 1.41 1.41" />
+                                <path d="m17.66 17.66 1.41 1.41" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.34 17.66-1.41 1.41" />
+                                <path d="m19.07 4.93-1.41 1.41" />
+                            </svg>`;
+                }
+                
+                const unit = document.getElementById('f').checked ? '°F' : '°C';
+                
+                const forecastCard = document.createElement('div');
+                forecastCard.className = 'flex items-center justify-between bg-gray-300 p-4 rounded-lg gap-6 flex-wrap';
+                forecastCard.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <span class="text-gray-900 font-medium">${forecast.dayName}</span>
+                        ${iconSVG}
+                    </div>
+                    <span class="text-gray-900 font-medium">max: ${forecast.maxTemp}${unit}</span>
+                    <span class="text-gray-900 font-medium">min: ${forecast.minTemp}${unit}</span>
+                    <span class="text-gray-900 font-medium">Humidity: ${forecast.humidity}%</span>
+                `;
+                
+                dailyContainer.appendChild(forecastCard);
             });
         }
 
