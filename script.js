@@ -112,6 +112,7 @@
 
         function error(err) {
             console.error(`ERROR(${err.code}): ${err.message}`);
+            getWeatherByCoords(33.5928, -7.6192); // Default to Casablanca coordinates if geolocation fails
         }
 
         async function getWeatherByCoords(lat, lon) {
