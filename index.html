@@ -8,6 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="styles/globals.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+    (function () {
+      emailjs.init("pBQ_KD-l3WUwWgXdV");
+    })();
+  </script>
     <style>
         * {
             font-family: 'Judson', sans-serif;
@@ -108,16 +114,17 @@
                             </span>
                         </div>
 
-                        <div id="about" class="group relative px-3 cursor-pointer">
+                        <div class="group relative px-3 cursor-pointer">
                             <div
                                 class="text-blue-100 flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
+                                <a href="#about">
                                 <svg class="group-hover:scale-110 transition-transform duration-300" width="20"
                                     height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z"
                                         stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
                                         stroke="currentColor"></path>
-                                </svg>
+                                </svg></a>
                             </div>
                             <span
                                 class="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-bottom scale-0 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium shadow-lg transition-all duration-300 ease-in-out group-hover:scale-100 before:absolute before:bottom-[-5px] before:left-[50%] before:-translate-x-[50%] before:border-[6px] before:border-transparent before:border-t-white">
@@ -191,7 +198,7 @@
                                             class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-600">Search</span>
                                     </div>
 
-                                    <div id="about" class="group relative cursor-pointer">
+                                    <div class="group relative cursor-pointer">
                                         <div
                                             class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
                                             <svg class="group-hover:scale-110 transition-transform duration-300"
@@ -409,6 +416,28 @@
                 </p>
    
         </section>
+
+        <!-- Contact Form -->
+            <section action="" id="contact" class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-6 text-white">
+                <h2 class="text-center mb-6">Contact us</h2>
+                <form id="form" class="space-y-4 max-w-2xl mx-auto">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Name" name="name" id="name"
+                            class="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border border-white/20 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50" />
+                        <input type="email" placeholder="Email" name="email" id="email"
+                            class="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border border-white/20 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50" />
+                    </div>
+                    <textarea placeholder="Message" name="message" id="message" rows="4"
+                        class="w-full px-4 py-3 bg-white/90 backdrop-blur-sm border border-white/20 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 resize-none"></textarea>
+                    <div class="text-center">
+                        <button type="submit"
+                            class="px-8 py-3 bg-white/20 hover:bg-white/30 text-white border border-white/20 rounded-md transition-colors">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+                <div id="status-message" class="mt-4 w-full text-center"></div>
+            </section>
 
     </main>
 
