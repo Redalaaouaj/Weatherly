@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Theme toggle functionality
+    // Theme toggle
     const themeToggles = document.querySelectorAll('input[type="checkbox"]');
     themeToggles.forEach(toggle => {
         if (toggle.closest('label.relative')) {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Initialize theme from localStorage
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     const isDark = savedTheme === 'dark';
     themeToggles.forEach(toggle => {
         if (toggle.closest('label.relative')) {
@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleTheme(isDark);
 });
 
-// Store current weather data globally for unit conversion
 window.currentWeatherData = null;
 window.currentTheme = 'dark';
 
@@ -66,14 +65,12 @@ function toggleTheme(isDark) {
     window.currentTheme = isDark ? 'dark' : 'light';
     localStorage.setItem('theme', window.currentTheme);
 
-    // Update body class for theme
     if (isDark) {
         document.body.classList.add('dark-theme');
     } else {
         document.body.classList.remove('dark-theme');
     }
 
-    // If we have weather data, update the background with the new theme
     if (window.currentWeatherData) {
         updateWeatherIcon(window.currentWeatherData.weather[0].main);
     }
@@ -205,7 +202,6 @@ function updateWeatherDisplay(data) {
     document.getElementById('current-temp').textContent = temp;
     document.getElementById('feels-like').textContent = feelsLike;
 
-    // Update weather details with API data
     document.getElementById('humidity').textContent = `${data.main.humidity}%`;
     document.getElementById('wind-speed').textContent = Math.round(data.wind.speed * 3.6); // Convert m/s to km/h
     document.getElementById('pressure').textContent = data.main.pressure;
@@ -311,7 +307,6 @@ function updateHourlyForecast(forecastData) {
     const hourlyContainer = document.querySelector('.grid.grid-cols-3.md\\:grid-cols-6');
     if (!hourlyContainer) return;
 
-    // Get the next 6 forecast entries (18 hours ahead, 3-hour intervals)
     const next6Forecasts = forecastData.list.slice(0, 6);
 
     hourlyContainer.innerHTML = '';
@@ -416,7 +411,6 @@ function updateDailyForecast(forecastData) {
     const dailyContainer = document.querySelector('#dd');
     if (!dailyContainer) return;
 
-    // Group forecast data by day (each day has 8 entries - 3-hour intervals)
     const dailyForecasts = [];
     const processedDays = new Set();
 
@@ -430,11 +424,9 @@ function updateDailyForecast(forecastData) {
         if (processedDays.has(dayKey)) continue;
         processedDays.add(dayKey);
 
-        // Calculate daily min/max temperatures
         let minTemp = Math.min(...dayData.map(item => item.main.temp_min));
         let maxTemp = Math.max(...dayData.map(item => item.main.temp_max));
 
-        // Convert temperatures if needed
         const isFahrenheit = document.getElementById('f').checked;
         if (isFahrenheit) {
             minTemp = Math.round((minTemp * 9 / 5) + 32);
@@ -444,7 +436,6 @@ function updateDailyForecast(forecastData) {
             maxTemp = Math.round(maxTemp);
         }
 
-        // Get the most common weather condition for the day
         const weatherCounts = {};
         dayData.forEach(item => {
             const weather = item.weather[0].main;
@@ -470,10 +461,9 @@ function updateDailyForecast(forecastData) {
         if (dailyForecasts.length >= 5) break;
     }
 
-    // Clear existing content
     dailyContainer.innerHTML = '';
 
-    // Generate forecast cards
+    // forecast cards
     dailyForecasts.forEach((forecast, index) => {
         const weatherMain = forecast.weather.toLowerCase();
         let iconSVG = '';
