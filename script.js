@@ -463,6 +463,8 @@ function updateDailyForecast(forecastData) {
 
     dailyContainer.innerHTML = '';
 
+    renderForecastChart(dailyForecasts);
+
     // forecast cards
     dailyForecasts.forEach((forecast, index) => {
         const weatherMain = forecast.weather.toLowerCase();
@@ -563,6 +565,53 @@ function updateDailyForecast(forecastData) {
     });
 }
 
+let forecastChart; // Chart.js instance
+
+function renderForecastChart(dailyForecasts) {
+    const ctx = document.getElementById('forecastChart').getContext('2d');
+    const labels = dailyForecasts.map(f => f.dayName);
+    const maxTemps = dailyForecasts.map(f => f.maxTemp);
+    const minTemps = dailyForecasts.map(f => f.minTemp);
+
+    // Destroy previous chart if exists
+    if (forecastChart) {
+        forecastChart.destroy();
+    }
+
+    forecastChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Max Temp',
+                    data: maxTemps,
+                    borderColor: '#f59e42',
+                    backgroundColor: 'rgba(245,158,66,0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: 'Min Temp',
+                    data: minTemps,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59,130,246,0.2)',
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    title: { display: true, text: 'Temperature' }
+                }
+            }
+        }
+    });
+}
 
 const form = document.getElementById("form");
 

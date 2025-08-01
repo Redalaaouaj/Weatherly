@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="styles/globals.css">
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     (function () {
       emailjs.init("pBQ_KD-l3WUwWgXdV");
@@ -404,6 +405,7 @@
             <div class="my-8 px-4 py-3">
                 <div class="p-6 bg-white rounded-lg shadow-sm">
                     <h2 class="mb-8">5-days forecasts</h2>
+                    <canvas id="forecastChart" height="100"></canvas>
                     <div id="dd" class="flex flex-col space-y-4 justify-around">
                         <!-- -->
                     </div>
